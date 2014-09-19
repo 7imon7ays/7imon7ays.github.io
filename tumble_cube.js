@@ -1,11 +1,6 @@
-var $window = $(window),
-    $cube = $('.cube'),
-    $face = $('.face');
+var $window = $(window), $cube = $('.cube'), $face = $('.face');
 
-var vertiScrolling = 0,
-    horiScrolling = 0,
-    lastScrollTop = 0,
-    lastScrollLeft = 0;
+var vertiScrolling = 0, horiScrolling = 0, lastScrollTop = 0, lastScrollLeft = 0;
 
 $window.on('scroll', tumbleCube);
 $window.on('resize', resize);
@@ -19,7 +14,6 @@ function tumbleCube () {
   } else if (st < lastScrollTop && $window.scrollTop() < 0) {
     vertiScrolling = vertiScrolling - 10;
   }
-
 
   if (sl > lastScrollLeft && $window.scrollLeft() > 0) {
     horiScrolling = horiScrolling + 10;
@@ -68,4 +62,43 @@ function resize(event) {
 }
 
 $(document).ready(resize);
+
+function isMobile () {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent);
+}
+
+if (isMobile()) {
+  var vx = 0, vy = 0;
+  var px = 0, py = 0;
+  var lastx, lasty;
+
+  document.addEventListener('touchstart', function(event) {
+      event.preventDefault();
+      var touch = event.touches[0];
+      lastx = touch.pageX;
+      lasty = touch.pageY;
+  }, false);
+
+  document.addEventListener('touchmove', function(event) {
+      event.preventDefault();
+      var touch = event.touches[0];
+      var mousex = touch.pageX;
+      var mousey = touch.pageY;
+      if (lastx !== mousex) vx = mousex - lastx;
+      if (lasty !== mousey) vy = mousey - lasty;
+      lastx = mousex;
+      lasty = mousey;
+  }, false);
+
+  function render() {
+      px += vx;
+      py += vy;
+      vx *= 0.9;
+      vy *= 0.9;
+      $('.cube')[0].style.webkitTransform = "rotateX("+px+"deg) rotateY("+py+"deg)";
+  }
+
+  setInterval(render, 50);
+}
 
