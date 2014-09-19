@@ -13,16 +13,16 @@ function tumbleCube () {
   var st = $window.scrollTop();
   var sl = $window.scrollLeft();
 
-  if (st > lastScrollTop) {
+  if (st > lastScrollTop && $window.scrollTop() > 0) {
     vertiScrolling = vertiScrolling + 5;
-  } else if (st < lastScrollTop) {
+  } else if (st < lastScrollTop && $window.scrollTop() < 0) {
     vertiScrolling = vertiScrolling - 5;
   }
 
 
-  if (sl > lastScrollLeft) {
+  if (sl > lastScrollLeft && $window.scrollLeft() > 0) {
     horiScrolling = horiScrolling + 5;
-  } else if (sl < lastScrollLeft) {
+  } else if (sl < lastScrollLeft && $window.scrollLeft() < 0) {
     horiScrolling = horiScrolling - 5;
   }
 
