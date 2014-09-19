@@ -4,10 +4,10 @@ body {
 }
 
 .cube {
-  height: 240px;
+  height: 360px;
   position: relative;
   margin: 50px auto;
-  width: 240px;
+  width: 360px;
   -webkit-transform-style: preserve-3d;
   text-align: center;
 }
@@ -21,38 +21,38 @@ body {
 .face {
   background-color: rgb(50, 50, 50);
   -webkit-box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.5);
-  height: 240px;
+  height: 360px;
   position: absolute;
-  width: 240px;
+  width: 360px;
 }
 
 .one  {
   background-color: rgb(242, 24, 25);
-  -webkit-transform: rotateX(90deg) translateZ(120px);
+  -webkit-transform: rotateX(90deg) translateZ(180px);
 }
 
 .two {
   background-color: rgb(235, 41, 158);
-  -webkit-transform: translateZ(120px);
+  -webkit-transform: translateZ(180px);
 }
 
 .three {
   background-color: rgb(252, 209, 22);
-  -webkit-transform: rotateY(90deg) translateZ(120px);
+  -webkit-transform: rotateY(90deg) translateZ(180px);
 }
 
 .four {
   background-color: rgb(44, 45, 213);
-  -webkit-transform: rotateY(180deg) translateZ(120px);
+  -webkit-transform: rotateY(180deg) translateZ(180px);
 }
 
 .five {
   background-color: rgb(125, 105, 181);
-  -webkit-transform: rotateY(-90deg) translateZ(120px);
+  -webkit-transform: rotateY(-90deg) translateZ(180px);
 }
 
 .six {
   background-color: rgb(22, 226, 38);
-  -webkit-transform: rotateX(-90deg) translateZ(120px) rotate(180deg);
+  -webkit-transform: rotateX(-90deg) translateZ(180px) rotate(180deg);
 }
 
