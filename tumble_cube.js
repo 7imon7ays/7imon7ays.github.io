@@ -102,11 +102,11 @@ if (isMobile()) {
     if (isMoving) {
       px += vx;
       py += vy;
-      vx *= 0.9;
-      vy *= 0.9;
+      vx *= 0.1;
+      vy *= 0.1;
       $('.cube')[0].style.webkitTransform = "rotateX(" + px + "deg) rotateY(" + py + "deg)";
     } else {
-      $('.cube')[0].style.webkitTransform = "rotateX(0deg) rotateY(0deg)";
+      $('.cube')[0].style.webkitTransform = "rotateX(" + px + "deg) rotateY(" + py + "deg)";
     }
   }
 
