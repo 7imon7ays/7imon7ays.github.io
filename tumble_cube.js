@@ -15,16 +15,16 @@ function tumbleCube () {
   var sl = $window.scrollLeft();
 
   if (st > lastScrollTop && $window.scrollTop() > 0) {
-    vertiScrolling = vertiScrolling + 5;
+    vertiScrolling = vertiScrolling + 10;
   } else if (st < lastScrollTop && $window.scrollTop() < 0) {
-    vertiScrolling = vertiScrolling - 5;
+    vertiScrolling = vertiScrolling - 10;
   }
 
 
   if (sl > lastScrollLeft && $window.scrollLeft() > 0) {
-    horiScrolling = horiScrolling + 5;
+    horiScrolling = horiScrolling + 10;
   } else if (sl < lastScrollLeft && $window.scrollLeft() < 0) {
-    horiScrolling = horiScrolling - 5;
+    horiScrolling = horiScrolling - 10;
   }
 
   $cube[0].style.webkitTransform = "rotateX("+ vertiScrolling +"deg) rotateY("+ horiScrolling +"deg)";
