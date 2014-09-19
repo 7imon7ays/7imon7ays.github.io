@@ -98,8 +98,8 @@ if (isMobile()) {
   }, false);
 
   function render() {
-    px += vx;
-    py += vy;
+    px -= vy;
+    py += vx;
     vx *= 0.1;
     vy *= 0.1;
     $('.cube')[0].style.webkitTransform = "rotateX(" + px + "deg) rotateY(" + py + "deg)";
