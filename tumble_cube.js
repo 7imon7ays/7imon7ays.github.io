@@ -72,7 +72,6 @@ if (isMobile()) {
   var vx = 0, vy = 0;
   var px = 0, py = 0;
   var lastx, lasty;
-  var isMoving;
 
   document.addEventListener('touchstart', function(event) {
       event.preventDefault();
@@ -99,15 +98,11 @@ if (isMobile()) {
   }, false);
 
   function render() {
-    if (isMoving) {
-      px += vx;
-      py += vy;
-      vx *= 0.1;
-      vy *= 0.1;
-      $('.cube')[0].style.webkitTransform = "rotateX(" + px + "deg) rotateY(" + py + "deg)";
-    } else {
-      $('.cube')[0].style.webkitTransform = "rotateX(" + px + "deg) rotateY(" + py + "deg)";
-    }
+    px += vx;
+    py += vy;
+    vx *= 0.1;
+    vy *= 0.1;
+    $('.cube')[0].style.webkitTransform = "rotateX(" + px + "deg) rotateY(" + py + "deg)";
   }
 
   setInterval(render, 50);
