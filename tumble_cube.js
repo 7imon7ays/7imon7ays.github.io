@@ -7,7 +7,7 @@ var lastScrollTop = 0;
 var lastScrollLeft = 0;
 
 $window.on('scroll', tumbleCube);
-$(window).on('resize', resize);
+$window.on('resize', resize);
 
 function tumbleCube () {
   var st = $window.scrollTop();
