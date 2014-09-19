@@ -105,6 +105,8 @@ if (isMobile()) {
       vx *= 0.9;
       vy *= 0.9;
       $('.cube')[0].style.webkitTransform = "rotateX(" + px + "deg) rotateY(" + py + "deg)";
+    } else {
+      $('.cube')[0].style.webkitTransform = "rotateX(0deg) rotateY(0deg)";
     }
   }
 
