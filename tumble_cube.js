@@ -6,35 +6,32 @@ $window.on('scroll', tumbleCube);
 $window.on('resize', resize);
 
 function tumbleCube () {
-  var st = $window.scrollTop();
-  var sl = $window.scrollLeft();
+  var distanceToTop = $window.scrollTop();
+  var distanceToLeft = $window.scrollLeft();
 
-  if (st > lastScrollTop && $window.scrollTop() > 0) {
+  if (distanceToTop > lastScrollTop && $window.scrollTop() > 0) {
     vertiScrolling = vertiScrolling + 7;
-  } else if (st < lastScrollTop && $window.scrollTop() < 0) {
+  } else if (distanceToTop < lastScrollTop && $window.scrollTop() < 0) {
     vertiScrolling = vertiScrolling - 7;
   }
 
-  if (sl > lastScrollLeft && $window.scrollLeft() > 0) {
+  if (distanceToLeft > lastScrollLeft && $window.scrollLeft() > 0) {
     horiScrolling = horiScrolling + 7;
-  } else if (sl < lastScrollLeft && $window.scrollLeft() < 0) {
+  } else if (distanceToLeft < lastScrollLeft && $window.scrollLeft() < 0) {
     horiScrolling = horiScrolling - 7;
   }
 
   $cube[0].style.webkitTransform = "rotateX("+ vertiScrolling +"deg) rotateY("+ -horiScrolling +"deg)";
   $cube[0].style.MozTransform = "rotateX("+ vertiScrolling +"deg) rotateY("+ -horiScrolling +"deg)";
-  lastScrollTop = st;
-  lastScrollLeft = sl;
 }
 
 var edgeLength = 360,
-    $one = $('.one'),
-    $two = $('.two'),
-    $three = $('.three');
-    $four = $('.four'),
-    $five = $('.five'),
-    $six = $('.six');
+    faces = [];
 
+    ['.one', '.two', '.three',
+      '.four', '.five', '.six'].forEach(function (numberClass, idx) {
+      faces['$' + (idx + 1)] = $face.filter(numberClass);
+    });
 
 function resize(event) {
   var edgeLength = 360,
@@ -47,35 +44,35 @@ function resize(event) {
   $face.css('height', edgeLength + 'px');
   $cube.css('width', edgeLength + 'px');
 
-  $one.css('-webkit-transform',
+  faces.$1.css('-webkit-transform',
       'rotateX(' + quarterLength + 'deg) translateZ(' + halfLength + 'px)');
-  $one.css('transform',
+  faces.$1.css('transform',
       'rotateX(' + quarterLength + 'deg) translateZ(' + halfLength + 'px)');
 
-  $two.css('-webkit-transform',
+  faces.$2.css('-webkit-transform',
       'translateZ(' + halfLength + 'px)');
-  $two.css('transform',
+  faces.$2.css('transform',
       'translateZ(' + halfLength + 'px)');
 
-  $three.css('-webkit-transform',
+  faces.$3.css('-webkit-transform',
      'rotateY(' + quarterLength + 'deg) translateZ(' + halfLength + 'px)');
-  $three.css('transform',
+  faces.$3.css('transform',
      'rotateY(' + quarterLength + 'deg) translateZ(' + halfLength + 'px)');
 
-  $four.css('-webkit-transform',
+  faces.$4.css('-webkit-transform',
       'rotateY(' + halfLength + 'deg) translateZ(' + halfLength + 'px)');
-  $four.css('transform',
+  faces.$4.css('transform',
       'rotateY(' + halfLength + 'deg) translateZ(' + halfLength + 'px)');
 
-  $five.css('-webkit-transform',
+  faces.$5.css('-webkit-transform',
       'rotateY(-' + quarterLength + 'deg) translateZ(' + halfLength + 'px)');
-  $five.css('transform',
+  faces.$5.css('transform',
       'rotateY(-' + quarterLength + 'deg) translateZ(' + halfLength + 'px)');
 
-  $six.css('-webkit-transform',
+  faces.$6.css('-webkit-transform',
       'rotateX(-' + quarterLength + 'deg) translateZ(' + halfLength +
         'px) rotate(' + halfLength + 'deg)');
-  $six.css('transform',
+  faces.$6.css('transform',
       'rotateX(-' + quarterLength + 'deg) translateZ(' + halfLength +
         'px) rotate(' + halfLength + 'deg)');
 }
