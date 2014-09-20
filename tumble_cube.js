@@ -61,13 +61,6 @@ function resize(event) {
         'px) rotate(' + halfLength + 'deg)');
 }
 
-$(document).ready(resize);
-
-function isMobile () {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent);
-}
-
 if (isMobile()) {
   var vx = 0, vy = 0;
   var px = 0, py = 0;
@@ -107,4 +100,11 @@ if (isMobile()) {
 
   setInterval(render, 50);
 }
+
+function isMobile () {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent);
+}
+
+$(document).ready(resize);
 
