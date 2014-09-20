@@ -2,27 +2,23 @@ var $window = $(window), $cube = $('.cube'), $face = $('.face');
 
 var vertiScrolling = 0, horiScrolling = 0, lastScrollTop = 0, lastScrollLeft = 0;
 
-$window.on('scroll', tumbleCube);
+function isFirefox () {
+  return /Firefox/i.test(navigator.userAgent);
+}
+
+var wheelEvent = isFirefox() ? 'wheel' : 'mousewheel';
+
+$window.on('mousewheel', tumbleCube);
 $window.on('resize', resize);
 
-function tumbleCube () {
-  var distanceToTop = $window.scrollTop();
-  var distanceToLeft = $window.scrollLeft();
+function tumbleCube (e) {
+  e.preventDefault();
 
-  if (distanceToTop > lastScrollTop && $window.scrollTop() > 0) {
-    vertiScrolling = vertiScrolling + 7;
-  } else if (distanceToTop < lastScrollTop && $window.scrollTop() < 0) {
-    vertiScrolling = vertiScrolling - 7;
-  }
+  horiScrolling += e.deltaX;
+  vertiScrolling += e.deltaY;
 
-  if (distanceToLeft > lastScrollLeft && $window.scrollLeft() > 0) {
-    horiScrolling = horiScrolling + 7;
-  } else if (distanceToLeft < lastScrollLeft && $window.scrollLeft() < 0) {
-    horiScrolling = horiScrolling - 7;
-  }
-
-  $cube[0].style.webkitTransform = "rotateX("+ vertiScrolling +"deg) rotateY("+ -horiScrolling +"deg)";
-  $cube[0].style.MozTransform = "rotateX("+ vertiScrolling +"deg) rotateY("+ -horiScrolling +"deg)";
+  $cube[0].style.webkitTransform = "rotateX(" + vertiScrolling + "deg) rotateY(" + horiScrolling + "deg)";
+  $cube[0].style.MozTransform = "rotateX(" + vertiScrolling + "deg) rotateY(" + horiScrolling + "deg)";
 }
 
 var edgeLength = 360,
