@@ -1,17 +1,21 @@
-var $window = $(window), $cube = $('.cube'), $face = $('.face');
+var $window = $(window), $cube = $('.cube'), $face = $('.face'),
+    faces = [];
 
-var vertiScrolling = 0, horiScrolling = 0, lastScrollTop = 0, lastScrollLeft = 0;
+['.one', '.two', '.three',
+  '.four', '.five', '.six'].forEach(function (numberClass, idx) {
+    faces['$' + (idx + 1)] = $face.filter(numberClass);
+});
 
-function isFirefox () {
-  return /Firefox/i.test(navigator.userAgent);
+if (isMobile()) {
+  tumbleCubeMobile();
+} else {
+  tumbleCubeDesktop();
 }
 
-var wheelEvent = isFirefox() ? 'wheel' : 'mousewheel';
+function tumbleCubeDesktop () {
+  var vertiScrolling = 0, horiScrolling = 0;
 
-$window.on('mousewheel', tumbleCube);
-$window.on('resize', resize);
-
-function tumbleCube (e) {
+  $window.on('mousewheel', function (e) {
   e.preventDefault();
 
   horiScrolling += e.deltaX;
@@ -19,15 +23,50 @@ function tumbleCube (e) {
 
   $cube[0].style.webkitTransform = "rotateX(" + vertiScrolling + "deg) rotateY(" + horiScrolling + "deg)";
   $cube[0].style.MozTransform = "rotateX(" + vertiScrolling + "deg) rotateY(" + horiScrolling + "deg)";
+  });
 }
 
-var edgeLength = 360,
-    faces = [];
+function tumbleCubeMobile () {
+  var vx = 0, vy = 0;
+  var px = 0, py = 0;
+  var lastx, lasty;
 
-    ['.one', '.two', '.three',
-      '.four', '.five', '.six'].forEach(function (numberClass, idx) {
-      faces['$' + (idx + 1)] = $face.filter(numberClass);
-    });
+  document.addEventListener('touchstart', function(event) {
+      event.preventDefault();
+      var touch = event.touches[0];
+      lastx = touch.pageX;
+      lasty = touch.pageY;
+  }, false);
+
+  document.addEventListener('touchmove', function(event) {
+      event.preventDefault();
+      var touch = event.touches[0];
+      var mousex = touch.pageX;
+      var mousey = touch.pageY;
+      if (lastx !== mousex) vx = mousex - lastx;
+      if (lasty !== mousey) vy = mousey - lasty;
+      lastx = mousex;
+      lasty = mousey;
+      isMoving = true;
+  }, false);
+
+  document.addEventListener('touchend', function(event) {
+    event.preventDefault();
+    isMoving = false;
+  }, false);
+
+  function render() {
+    px -= vy;
+    py += vx;
+    vx *= 0.1;
+    vy *= 0.1;
+    $('.cube')[0].style.webkitTransform = "rotateX(" + px + "deg) rotateY(" + py + "deg)";
+  }
+
+  setInterval(render, 50);
+}
+
+$window.on('resize', resize);
 
 function resize(event) {
   var edgeLength = 360,
@@ -71,46 +110,6 @@ function resize(event) {
   faces.$6.css('transform',
       'rotateX(-' + quarterLength + 'deg) translateZ(' + halfLength +
         'px) rotate(' + halfLength + 'deg)');
-}
-
-if (isMobile()) {
-  var vx = 0, vy = 0;
-  var px = 0, py = 0;
-  var lastx, lasty;
-
-  document.addEventListener('touchstart', function(event) {
-      event.preventDefault();
-      var touch = event.touches[0];
-      lastx = touch.pageX;
-      lasty = touch.pageY;
-  }, false);
-
-  document.addEventListener('touchmove', function(event) {
-      event.preventDefault();
-      var touch = event.touches[0];
-      var mousex = touch.pageX;
-      var mousey = touch.pageY;
-      if (lastx !== mousex) vx = mousex - lastx;
-      if (lasty !== mousey) vy = mousey - lasty;
-      lastx = mousex;
-      lasty = mousey;
-      isMoving = true;
-  }, false);
-
-  document.addEventListener('touchend', function(event) {
-    event.preventDefault();
-    isMoving = false;
-  }, false);
-
-  function render() {
-    px -= vy;
-    py += vx;
-    vx *= 0.1;
-    vy *= 0.1;
-    $('.cube')[0].style.webkitTransform = "rotateX(" + px + "deg) rotateY(" + py + "deg)";
-  }
-
-  setInterval(render, 50);
 }
 
 function isMobile () {
