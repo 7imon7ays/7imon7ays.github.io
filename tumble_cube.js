@@ -10,18 +10,19 @@ function tumbleCube () {
   var sl = $window.scrollLeft();
 
   if (st > lastScrollTop && $window.scrollTop() > 0) {
-    vertiScrolling = vertiScrolling + 10;
+    vertiScrolling = vertiScrolling + 7;
   } else if (st < lastScrollTop && $window.scrollTop() < 0) {
-    vertiScrolling = vertiScrolling - 10;
+    vertiScrolling = vertiScrolling - 7;
   }
 
   if (sl > lastScrollLeft && $window.scrollLeft() > 0) {
-    horiScrolling = horiScrolling + 10;
+    horiScrolling = horiScrolling + 7;
   } else if (sl < lastScrollLeft && $window.scrollLeft() < 0) {
-    horiScrolling = horiScrolling - 10;
+    horiScrolling = horiScrolling - 7;
   }
 
-  $cube[0].style.webkitTransform = "rotateX("+ vertiScrolling +"deg) rotateY("+ horiScrolling +"deg)";
+  $cube[0].style.webkitTransform = "rotateX("+ vertiScrolling +"deg) rotateY("+ -horiScrolling +"deg)";
+  $cube[0].style.MozTransform = "rotateX("+ vertiScrolling +"deg) rotateY("+ -horiScrolling +"deg)";
   lastScrollTop = st;
   lastScrollLeft = sl;
 }
@@ -48,15 +49,33 @@ function resize(event) {
 
   $one.css('-webkit-transform',
       'rotateX(' + quarterLength + 'deg) translateZ(' + halfLength + 'px)');
+  $one.css('transform',
+      'rotateX(' + quarterLength + 'deg) translateZ(' + halfLength + 'px)');
+
   $two.css('-webkit-transform',
       'translateZ(' + halfLength + 'px)');
+  $two.css('transform',
+      'translateZ(' + halfLength + 'px)');
+
   $three.css('-webkit-transform',
      'rotateY(' + quarterLength + 'deg) translateZ(' + halfLength + 'px)');
+  $three.css('transform',
+     'rotateY(' + quarterLength + 'deg) translateZ(' + halfLength + 'px)');
+
   $four.css('-webkit-transform',
       'rotateY(' + halfLength + 'deg) translateZ(' + halfLength + 'px)');
+  $four.css('transform',
+      'rotateY(' + halfLength + 'deg) translateZ(' + halfLength + 'px)');
+
   $five.css('-webkit-transform',
       'rotateY(-' + quarterLength + 'deg) translateZ(' + halfLength + 'px)');
+  $five.css('transform',
+      'rotateY(-' + quarterLength + 'deg) translateZ(' + halfLength + 'px)');
+
   $six.css('-webkit-transform',
+      'rotateX(-' + quarterLength + 'deg) translateZ(' + halfLength +
+        'px) rotate(' + halfLength + 'deg)');
+  $six.css('transform',
       'rotateX(-' + quarterLength + 'deg) translateZ(' + halfLength +
         'px) rotate(' + halfLength + 'deg)');
 }
