@@ -13,7 +13,8 @@ if (isMobile()) {
 }
 
 function tumbleCubeDesktop () {
-  var vertiScrolling = 0, horiScrolling = 0, nowScrolling = false, flipped90 = false;
+  var vertiScrolling = 0, horiScrolling = 0,
+      nowScrolling = false, flipped90 = false, flipped180 = false;
 
   $window.on('mousewheel', function (e) {
     e.preventDefault();
@@ -21,20 +22,18 @@ function tumbleCubeDesktop () {
 
     horiScrolling -= e.deltaX * 0.5;
     vertiScrolling -= e.deltaY * 0.5;
-
-    if (flipped90) {
-      $cube[0].style.webkitTransform = "rotateX(" + vertiScrolling + "deg) rotateZ(" + -horiScrolling + "deg)";
-      $cube[0].style.MozTransform = "rotateX(" + vertiScrolling + "deg) rotateZ(" + -horiScrolling + "deg)";
-    } else {
-      $cube[0].style.webkitTransform = "rotateX(" + vertiScrolling + "deg) rotateY(" + horiScrolling + "deg)";
-      $cube[0].style.MozTransform = "rotateX(" + vertiScrolling + "deg) rotateY(" + horiScrolling + "deg)";
-    }
   });
 
   setInterval(function () {
-    var angleFrom90 = 90 / (vertiScrolling % 180);
-    if (!nowScrolling) flipped90 = angleFrom90 < 10;
-  }, 100);
+    var angleFrom90 = Math.abs(vertiScrolling % 180 / 2);
+    var angleFrom180 = Math.abs(vertiScrolling % 360 / 2);
+
+    if (!nowScrolling) flipped90 = Math.abs(45 - angleFrom90) < 20;
+    if (!nowScrolling) flipped180 = Math.abs(90 - angleFrom180) < 20;
+
+    $cube[0].style.webkitTransform = "rotateX(" + vertiScrolling + "deg) rotateY(" + horiScrolling + "deg)";
+    $cube[0].style.MozTransform = "rotateX(" + vertiScrolling + "deg) rotateY(" + horiScrolling + "deg)";
+  }, 10);
 
   setInterval(function () {
     nowScrolling = false;
