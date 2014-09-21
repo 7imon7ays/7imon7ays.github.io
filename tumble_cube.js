@@ -18,8 +18,8 @@ function tumbleCubeDesktop () {
   $window.on('mousewheel', function (e) {
   e.preventDefault();
 
-  horiScrolling += e.deltaX;
-  vertiScrolling += e.deltaY;
+  horiScrolling -= e.deltaX * 0.5;
+  vertiScrolling -= e.deltaY * 0.5;
 
   $cube[0].style.webkitTransform = "rotateX(" + vertiScrolling + "deg) rotateY(" + horiScrolling + "deg)";
   $cube[0].style.MozTransform = "rotateX(" + vertiScrolling + "deg) rotateY(" + horiScrolling + "deg)";
