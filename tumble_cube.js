@@ -13,17 +13,32 @@ if (isMobile()) {
 }
 
 function tumbleCubeDesktop () {
-  var vertiScrolling = 0, horiScrolling = 0;
+  var vertiScrolling = 0, horiScrolling = 0, nowScrolling = false, flipped90 = false;
 
   $window.on('mousewheel', function (e) {
-  e.preventDefault();
+    e.preventDefault();
+    nowScrolling = true;
 
-  horiScrolling -= e.deltaX * 0.5;
-  vertiScrolling -= e.deltaY * 0.5;
+    horiScrolling -= e.deltaX * 0.5;
+    vertiScrolling -= e.deltaY * 0.5;
 
-  $cube[0].style.webkitTransform = "rotateX(" + vertiScrolling + "deg) rotateY(" + horiScrolling + "deg)";
-  $cube[0].style.MozTransform = "rotateX(" + vertiScrolling + "deg) rotateY(" + horiScrolling + "deg)";
+    if (flipped90) {
+      $cube[0].style.webkitTransform = "rotateX(" + vertiScrolling + "deg) rotateZ(" + -horiScrolling + "deg)";
+      $cube[0].style.MozTransform = "rotateX(" + vertiScrolling + "deg) rotateZ(" + -horiScrolling + "deg)";
+    } else {
+      $cube[0].style.webkitTransform = "rotateX(" + vertiScrolling + "deg) rotateY(" + horiScrolling + "deg)";
+      $cube[0].style.MozTransform = "rotateX(" + vertiScrolling + "deg) rotateY(" + horiScrolling + "deg)";
+    }
   });
+
+  setInterval(function () {
+    var angleFrom90 = 90 / (vertiScrolling % 180);
+    if (!nowScrolling) flipped90 = angleFrom90 < 10;
+  }, 100);
+
+  setInterval(function () {
+    nowScrolling = false;
+  }, 250);
 }
 
 function tumbleCubeMobile () {
