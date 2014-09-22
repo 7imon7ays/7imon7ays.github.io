@@ -6,12 +6,6 @@ var $window = $(window), $cube = $('.cube'), $face = $('.face'),
     faces['$' + (idx + 1)] = $face.filter(numberClass);
 });
 
-if (isMobile()) {
-  tumbleCubeMobile();
-} else {
-  tumbleCubeDesktop();
-}
-
 function tumbleCubeDesktop () {
   var vertiScrolling = 0, horiScrolling = 0,
       nowScrolling = false, flipped90 = false, flipped180 = false;
@@ -132,4 +126,10 @@ function isMobile () {
 }
 
 $(document).ready(resize);
+
+if (isMobile()) {
+  tumbleCubeMobile();
+} else {
+  tumbleCubeDesktop();
+}
 
