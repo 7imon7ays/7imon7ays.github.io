@@ -59,6 +59,8 @@ function tumbleCubeMobile () {
   var lastx, lasty;
 
   document.addEventListener('touchstart', function(event) {
+      if (event.target.tagName == 'A') return;
+
       event.preventDefault();
       var touch = event.touches[0];
       lastx = touch.pageX;

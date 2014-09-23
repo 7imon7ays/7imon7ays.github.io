@@ -17,9 +17,10 @@
 
 .cube a {
   position: relative;
-  top: 50%;
+  top: 48%;
   color:rgba(0,0,0,0.5);
   font: sans-serif;
+  font-size: 30;
   text-decoration: none;
 }
 
