@@ -18,17 +18,19 @@ function tumbleCubeDesktop () {
     xIncrement = e.deltaX * 0.2;
     yIncrement = e.deltaY * 0.2;
 
-    if (isFlipped90) {
-      yAngle -= yIncrement;
+    if (isFacingDown) {
+      zAngle -= xIncrement;
+    } else if (isFlipped90) {
       zAngle += xIncrement;
+    } else if (isFlipped180) {
+      xAngle += xIncrement;
+    } else if (isFacingDown) {
+      zAngle -= xIncrement;
     } else {
-      if (isFlipped180) {
-        xAngle += xIncrement;
-      } else {
-        xAngle -= xIncrement;
-      }
-      yAngle -= yIncrement;
+      xAngle -= xIncrement;
     }
+
+    yAngle -= yIncrement;
 
     $cube[0].style.webkitTransform = "rotateX(" + yAngle + "deg) rotateY(" + xAngle + "deg) rotateZ(" + zAngle + "deg)";
     $cube[0].style.MozTransform = "rotateX(" + xAngle + "deg) rotateY(" + yAngle + "deg) rotateZ(" + zAngle + "deg)";
