@@ -7,26 +7,39 @@ var $window = $(window), $cube = $('.cube'), $face = $('.face'),
 });
 
 function tumbleCubeDesktop () {
-  var vertiScrolling = 0, horiScrolling = 0,
+  var vertiScroll = 0, horiScroll = 0,
+      xAngle = 0, yAngle = 0, zAngle = 0,
       nowScrolling = false, flipped90 = false, flipped180 = false;
 
   $window.on('mousewheel', function (e) {
     e.preventDefault();
     nowScrolling = true;
 
-    horiScrolling -= e.deltaX * 0.5;
-    vertiScrolling -= e.deltaY * 0.5;
+    xIncrement = e.deltaX * 0.2;
+    yIncrement = e.deltaY * 0.2;
+
+    if (flipped90) {
+      xAngle -= yIncrement;
+      zAngle += xIncrement;
+    } else {
+      if (flipped180) {
+        yAngle += xIncrement;
+      } else {
+        yAngle -= xIncrement;
+      }
+      xAngle -= yIncrement;
+    }
+
+    $cube[0].style.webkitTransform = "rotateX(" + xAngle + "deg) rotateY(" + yAngle + "deg) rotateZ(" + zAngle + "deg)";
+    $cube[0].style.MozTransform = "rotateX(" + xAngle + "deg) rotateY(" + yAngle + "deg) rotateZ(" + zAngle + "deg)";
   });
 
   setInterval(function () {
-    var angleFrom90 = Math.abs(vertiScrolling % 180 / 2);
-    var angleFrom180 = Math.abs(vertiScrolling % 360 / 2);
+    var angleFrom90 = Math.abs(xAngle % 180 / 2);
+    var angleFrom180 = Math.abs(xAngle % 360 / 2);
 
-    if (!nowScrolling) flipped90 = Math.abs(45 - angleFrom90) < 20;
-    if (!nowScrolling) flipped180 = Math.abs(90 - angleFrom180) < 20;
-
-    $cube[0].style.webkitTransform = "rotateX(" + vertiScrolling + "deg) rotateY(" + horiScrolling + "deg)";
-    $cube[0].style.MozTransform = "rotateX(" + vertiScrolling + "deg) rotateY(" + horiScrolling + "deg)";
+    if (!nowScrolling) flipped90 = Math.abs(45 - angleFrom90) < 10;
+    if (!nowScrolling) flipped180 = Math.abs(90 - angleFrom180) < 10;
   }, 10);
 
   setInterval(function () {
