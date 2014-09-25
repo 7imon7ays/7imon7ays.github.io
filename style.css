@@ -1,3 +1,21 @@
+body {
+  background: rgba(227,227,227,1);
+  background: -moz-linear-gradient(left, rgba(227,227,227,1) 0%, rgba(242,242,242,1) 0%,
+    rgba(250,250,250,1) 52%, rgba(235,235,235,1) 100%);
+  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(227,227,227,1)),
+    color-stop(0%, rgba(242,242,242,1)), color-stop(52%, rgba(250,250,250,1)), color-stop(100%, rgba(235,235,235,1)));
+  background: -webkit-linear-gradient(left, rgba(227,227,227,1) 0%, rgba(242,242,242,1) 0%,
+    rgba(250,250,250,1) 52%, rgba(235,235,235,1) 100%);
+  background: -o-linear-gradient(left, rgba(227,227,227,1) 0%, rgba(242,242,242,1) 0%,
+    rgba(250,250,250,1) 52%, rgba(235,235,235,1) 100%);
+  background: -ms-linear-gradient(left, rgba(227,227,227,1) 0%, rgba(242,242,242,1) 0%,
+    rgba(250,250,250,1) 52%, rgba(235,235,235,1) 100%);
+  background: linear-gradient(to right, rgba(227,227,227,1) 0%, rgba(242,242,242,1) 0%,
+    rgba(250,250,250,1) 52%, rgba(235,235,235,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e3e3e3',
+    endColorstr='#ebebeb', GradientType=1 );
+}
+
 .wrapper {
   perspective: 1500px;
   perspective-origin: 50% 100px;
@@ -19,8 +37,7 @@
   position: relative;
   top: 48%;
   color:rgba(0,0,0,0.5);
-  font: sans-serif;
-  font-size: 30;
+  font-size: 30px;
   text-decoration: none;
 }
 
