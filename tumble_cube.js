@@ -7,16 +7,43 @@ var $window = $(window), $cube = $('.cube'), $face = $('.face'),
 });
 
 function tumbleCubeDesktop () {
-  var vertiScroll = 0, horiScroll = 0,
+  var xIncrement = 0, yIncrement = 0,
       xAngle = 0, yAngle = 0, zAngle = 0, nowScrolling = false,
       isFlipped90 = false, isFlipped180 = false, isFacingDown = false;
 
-  $window.on('mousewheel', function (e) {
-    e.preventDefault();
-    nowScrolling = true;
+  $window.on('mousewheel keydown', function (e) {
+    var delta, keyId, didPressArrowKey, didScroll;
 
-    xIncrement = e.deltaX * 0.2;
-    yIncrement = e.deltaY * 0.2;
+    nowScrolling = true;
+    keyId = e.which;
+    didPressArrowKey = [37,38,39,40].indexOf(keyId) !== -1;
+    didScroll = keyId === 1;
+
+    if (didPressArrowKey || didScroll) e.preventDefault();
+
+    if (e.which === 1) {
+      xIncrement = e.deltaX * 0.2;
+      yIncrement = e.deltaY * 0.2;
+    } else {
+      xIncrement = 0;
+      yIncrement = 0;
+      delta = 5;
+      switch(e.which) {
+        case 37:
+          xIncrement += delta;
+          break;
+        case 38:
+          yIncrement -= delta;
+          break;
+        case 39:
+          xIncrement -= delta;
+          break;
+        case 40:
+          yIncrement += delta;
+          break;
+        default: return;
+      }
+    }
 
     if (isFacingDown) {
       zAngle -= xIncrement;
