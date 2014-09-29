@@ -60,7 +60,7 @@ function tumbleCubeDesktop () {
     yAngle -= yIncrement;
 
     $cube[0].style.webkitTransform = "rotateX(" + yAngle + "deg) rotateY(" + xAngle + "deg) rotateZ(" + zAngle + "deg)";
-    $cube[0].style.MozTransform = "rotateX(" + xAngle + "deg) rotateY(" + yAngle + "deg) rotateZ(" + zAngle + "deg)";
+    $cube[0].style.MozTransform = "rotateX(" + yAngle + "deg) rotateY(" + xAngle + "deg) rotateZ(" + zAngle + "deg)";
   });
 
   setInterval(function () {
