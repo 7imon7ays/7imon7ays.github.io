@@ -1,8 +1,11 @@
-var $window = $(window), $cube = $('.cube');
+// $cube and $window defined in resize.js
 
-if (isMobile()) {
-  tumbleCubeMobile($cube);
-} else {
-  tumbleCubeDesktop($cube, $window);
-}
+(function() {
+
+  if (isMobile()) {
+    tumbleCubeMobile($cube);
+  } else {
+    tumbleCubeDesktop($cube, $window);
+  }
+}());
 

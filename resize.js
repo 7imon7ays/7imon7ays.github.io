@@ -1,11 +1,13 @@
-var $face = $('.face'), faces = {};
-
-['.one', '.two', '.three',
-  '.four', '.five', '.six'].forEach(function (numberClass, idx) {
-    faces['$' + (idx + 1)] = $face.filter(numberClass);
-});
+var $cube = $('.cube'), $window = $(window);
 
 function resize(event) {
+  var $face = $('.face'), faces = {};
+
+  ['.one', '.two', '.three',
+    '.four', '.five', '.six'].forEach(function (numberClass, idx) {
+      faces['$' + (idx + 1)] = $face.filter(numberClass);
+  });
+
   var edgeLength = 360,
       halfLength = edgeLength / 2,
       quarterLength = halfLength / 2,
@@ -49,6 +51,6 @@ function resize(event) {
         'px) rotate(' + halfLength + 'deg)');
 }
 
-$(document).ready(resize);
+resize();
 $window.on('resize', resize);
 
