@@ -27,7 +27,7 @@ body {
   position: relative;
   height: 360px;
   width: 360px;
-  margin: 50px auto;
+  margin: 100px auto;
   text-align: center;
   transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
@@ -49,5 +49,13 @@ body {
   background:rgba(255,255,255,0.1);
   box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.5);
   -webkit-box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.5);
+}
+
+.flash > p {
+  display: none;
+  color:rgba(0,0,0,0.5);
+  font-family: garamond;
+  text-align: center;
+  font-size: 30px;
 }
 

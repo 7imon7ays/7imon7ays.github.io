@@ -6,7 +6,14 @@ module.exports = function(grunt) {
         separator: ';'
       },
       dist: {
-        src: ['dev/js/*.js'],
+        src: ['dev/js/jquery.mousewheel.js',
+              'dev/js/underscore_throttle.js',
+              'dev/js/resize.js',
+              'dev/js/tumble_cube_mobile.js',
+              'dev/js/tumble_cube_desktop.js',
+              'dev/js/tumble_info.js',
+              'dev/js/tumble_cube.js'
+            ],
         dest: 'prod/js/<%= pkg.name %>.js'
       },
     },

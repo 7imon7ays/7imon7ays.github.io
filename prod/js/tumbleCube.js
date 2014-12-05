@@ -219,7 +219,45 @@
     }
 
 }));
-;var $cube = $('.cube'), $window = $(window);
+;(function ($) {
+
+  // replaced underscore dependencies
+
+  function throttle(func, wait, options) {
+    var context, args, result;
+    var timeout = null;
+    var previous = 0;
+    options || (options = {});
+    var later = function() {
+      previous = options.leading === false ? 0 : new Date().getTime() //_.now();
+      timeout = null;
+      result = func.apply(context, args);
+      context = args = null;
+    };
+
+    return function() {
+      // var now = _.now();
+      var now = new Date().getTime()
+      if (!previous && options.leading === false) previous = now;
+      var remaining = wait - (now - previous);
+      context = this;
+      args = arguments;
+      if (remaining <= 0) {
+        clearTimeout(timeout);
+        timeout = null;
+        previous = now;
+        result = func.apply(context, args);
+        context = args = null;
+      } else if (!timeout && options.trailing !== false) {
+        timeout = setTimeout(later, remaining);
+      }
+      return result;
+    };
+  }
+
+  $.throttle = throttle;
+
+})(jQuery);;var $cube = $('.cube'), $window = $(window);
 
 function resize(event) {
   var $face = $('.face'), faces = {};
@@ -275,16 +313,53 @@ function resize(event) {
 resize();
 $window.on('resize', resize);
 
-;// $cube and $window defined in resize.js
+;function tumbleCubeMobile ($cube) {
+  var vx = 0, vy = 0;
+  var px = 0, py = 0;
+  var lastx, lasty;
 
-(function() {
+  document.addEventListener('touchstart', function(event) {
+      if (event.target.tagName == 'A') return;
 
-  if (isMobile()) {
-    tumbleCubeMobile($cube);
-  } else {
-    tumbleCubeDesktop($cube, $window);
+      event.preventDefault();
+      var touch = event.touches[0];
+      lastx = touch.pageX;
+      lasty = touch.pageY;
+  }, false);
+
+  document.addEventListener('touchmove', function(event) {
+      event.preventDefault();
+      var touch = event.touches[0];
+      var mousex = touch.pageX;
+      var mousey = touch.pageY;
+      if (lastx !== mousex) vx = mousex - lastx;
+      if (lasty !== mousey) vy = mousey - lasty;
+      lastx = mousex;
+      lasty = mousey;
+      isMoving = true;
+  }, false);
+
+  document.addEventListener('touchend', function(event) {
+    event.preventDefault();
+    isMoving = false;
+  }, false);
+
+  function render() {
+    px -= vy;
+    py += vx;
+    vx *= 0.1;
+    vy *= 0.1;
+    $cube[0].style.webkitTransform = "rotateX(" + px + "deg) rotateY(" + py + "deg)";
+    $cube[0].style.MozTransform = "rotateX(" + px + "deg) rotateY(" + py + "deg)";
   }
-}());
+
+  setInterval(render, 50);
+}
+
+function isMobile () {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent);
+}
 
 ;function tumbleCubeDesktop($cube, $window) {
 
@@ -398,51 +473,31 @@ $window.on('resize', resize);
   }
 }
 
-;function tumbleCubeMobile ($cube) {
-  var vx = 0, vy = 0;
-  var px = 0, py = 0;
-  var lastx, lasty;
+;function tumbleInfo() {
+  var throttledFlashInfo = $.throttle(flashInfo, 3000);
 
-  document.addEventListener('touchstart', function(event) {
-      if (event.target.tagName == 'A') return;
+  $window.on("mousedown keydown", function (e) {
+    var clickedOnAnchor = $(e.target).is('a');
+    if (clickedOnAnchor) return;
+     
+    throttledFlashInfo();
+  });
 
-      event.preventDefault();
-      var touch = event.touches[0];
-      lastx = touch.pageX;
-      lasty = touch.pageY;
-  }, false);
+  function flashInfo () {
+    $(".flash > p").fadeIn(500).fadeOut(500);
+  }
+}
 
-  document.addEventListener('touchmove', function(event) {
-      event.preventDefault();
-      var touch = event.touches[0];
-      var mousex = touch.pageX;
-      var mousey = touch.pageY;
-      if (lastx !== mousex) vx = mousex - lastx;
-      if (lasty !== mousey) vy = mousey - lasty;
-      lastx = mousex;
-      lasty = mousey;
-      isMoving = true;
-  }, false);
+;// $cube and $window defined in resize.js
 
-  document.addEventListener('touchend', function(event) {
-    event.preventDefault();
-    isMoving = false;
-  }, false);
+(function() {
 
-  function render() {
-    px -= vy;
-    py += vx;
-    vx *= 0.1;
-    vy *= 0.1;
-    $cube[0].style.webkitTransform = "rotateX(" + px + "deg) rotateY(" + py + "deg)";
-    $cube[0].style.MozTransform = "rotateX(" + px + "deg) rotateY(" + py + "deg)";
+  if (isMobile()) {
+    tumbleCubeMobile($cube);
+  } else {
+    tumbleCubeDesktop($cube, $window);
+    tumbleInfo();
   }
 
-  setInterval(render, 50);
-}
-
-function isMobile () {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent);
-}
+}());
 
