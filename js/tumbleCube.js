@@ -473,21 +473,18 @@ function isMobile () {
   }
 }
 
-;function tumbleInfo() {
-  var throttledFlashInfo = $.throttle(flashInfo, 3000);
+;function tumbleNav () {
+  var $navlist = $(".nav-list");
 
-  $window.on("mousedown keydown", function (e) {
-    var clickedOnAnchor = $(e.target).is('a');
-    if (clickedOnAnchor) return;
-     
-    throttledFlashInfo();
-  });
+  $window.on("mousewheel touchmove", moveUpNav);
 
-  function flashInfo () {
-    $(".flash > p").fadeIn(500).fadeOut(500);
+  function moveUpNav () {
+    $navlist.removeClass('window-edge')
+            .addClass('window-bottom');
+
+    $window.off("mousewheel touchmove", moveUpNav);
   }
 }
-
 ;// $cube and $window defined in resize.js
 
 (function() {
@@ -496,8 +493,8 @@ function isMobile () {
     tumbleCubeMobile($cube);
   } else {
     tumbleCubeDesktop($cube, $window);
-    tumbleInfo();
   }
+  tumbleNav();
 
 }());
 
