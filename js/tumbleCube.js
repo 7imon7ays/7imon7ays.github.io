@@ -369,7 +369,6 @@ function isMobile () {
 
   tumbleScroll();
   tumbleMove();
-  tumbleDrag();
 
   function tumbleScroll() {
     $window.on('mousewheel', function(e) {
@@ -421,22 +420,6 @@ function isMobile () {
     });
   }
 
-  function tumbleDrag() {
-    var xOrigin, yOrigin;
-    $cube.mousedown(function(e) {
-      xOrigin = e.clientX, yOrigin = e.clientY;
-      $window.mousemove(function(e) {
-          xAngle += (e.clientX - xOrigin) / 50;
-          yAngle -= (e.clientY - yOrigin) / 50;
-          tumble();
-      });
-    });
-
-    $window.mouseup(function() {
-      $window.off("mousemove");
-    });
-  }
-
   function tumble() {
     if (isFacingDown) {
       zAngle -= xIncrement;
@@ -476,13 +459,21 @@ function isMobile () {
 ;function tumbleNav () {
   var $navlist = $(".nav-list");
 
-  $window.on("mousewheel touchmove", moveUpNav);
+  $window.on('hover', moveDownNav);
 
   function moveUpNav () {
     $navlist.removeClass('window-edge')
             .addClass('window-bottom');
 
     $window.off("mousewheel touchmove", moveUpNav);
+  }
+
+  function moveDownNav () {
+    $navlist.removeClass('window-bottom')
+            .addClass('window-edge');
+
+    $window.on("mousewheel touchmove", moveUpNav);
+    $window.off('hover', moveDownNav);
   }
 }
 ;// $cube and $window defined in resize.js
@@ -494,7 +485,12 @@ function isMobile () {
   } else {
     tumbleCubeDesktop($cube, $window);
   }
-  tumbleNav();
 
+  var offsetScroll = $.Event("mousewheel", {
+    deltaX: -90, deltaY: -10, which: 1
+  });
+
+  $window.trigger(offsetScroll);
+  tumbleNav();
 }());
 
